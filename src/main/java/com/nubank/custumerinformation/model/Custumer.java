@@ -36,6 +36,19 @@ public class Custumer implements Serializable {
 	
 	@Column(name = "is_avaliable_cpf_payment", nullable = false)
 	private Boolean isAvaliableToCpfPayment;
+	
+	public Custumer() {
+	}
+
+	public Custumer(String cpf, String completeName, String cardNumber, String expiredDate, String code,
+			Boolean isAvaliableToCpfPayment) {
+		this.cpf = cpf;
+		this.completeName = completeName;
+		this.cardNumber = cardNumber;
+		this.expiredDate = expiredDate;
+		this.code = code;
+		this.isAvaliableToCpfPayment = isAvaliableToCpfPayment;
+	}
 
 	public Long getId() {
 		return id;

@@ -6,4 +6,6 @@ public interface CustumerInformationService {
 	
 	Custumer getCustumerInformation(String cpf);
 
+	String updateCustumerCpfPayment(String cpf, boolean status);
+
 }
