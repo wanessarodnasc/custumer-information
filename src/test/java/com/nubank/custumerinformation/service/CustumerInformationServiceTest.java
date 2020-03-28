@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.nubank.custumerinformation.form.CustumerStatusForm;
 import com.nubank.custumerinformation.model.Custumer;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -28,14 +29,18 @@ public class CustumerInformationServiceTest {
 	public void updateCustumerCpfPayment() {
 		Custumer custumer = service.getCustumerInformation("35177355221");
 		if(custumer.getIsAvaliableToCpfPayment() == true) {
-			service.updateCustumerCpfPayment("35177355221", false);
+			service.updateCustumerCpfPayment(getCustumerInformation("35177355221", false));
 			Custumer custumerTrue = service.getCustumerInformation("35177355221");
 			assertEquals(custumerTrue.getIsAvaliableToCpfPayment(), false);
 		}
 		if(custumer.getIsAvaliableToCpfPayment() == false) {
-			service.updateCustumerCpfPayment("35177355221", true);
+			service.updateCustumerCpfPayment(getCustumerInformation("35177355221", true));
 			Custumer custumerTrue = service.getCustumerInformation("35177355221");
 			assertEquals(custumerTrue.getIsAvaliableToCpfPayment(), true);
 		}
+	}
+
+	private CustumerStatusForm getCustumerInformation(String code, boolean status) {
+		return new CustumerStatusForm(code, status);
 	}
 }

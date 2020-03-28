@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nubank.custumerinformation.enumeration.StatusEnum;
+import com.nubank.custumerinformation.form.CustumerStatusForm;
 import com.nubank.custumerinformation.model.Custumer;
 import com.nubank.custumerinformation.repository.CustumerInformationRepository;
 import com.nubank.custumerinformation.service.CustumerInformationService;
@@ -31,15 +32,20 @@ public class CustumerInformationServiceImp implements CustumerInformationService
 	}
 
 	@Override
-	public String updateCustumerCpfPayment(String cpf, boolean status) {
-		LOGGER.info("Set cpf payment to " + status);
-		Optional<Custumer> custumer = repository.findByCpf(cpf);
-		if(custumer.isPresent()) {
+	public String updateCustumerCpfPayment(CustumerStatusForm custumerForm) {
+		Boolean status = custumerForm.getStatus();
+		LOGGER.info("Set cpf payment to " + custumerForm.getStatus());
+		try {
+			Optional<Custumer> custumer = repository.findByCpf(custumerForm.getCode());
+			if(!custumer.isPresent()) {
+				return "Custumer does not exist.";
+			}
 			custumer.get().setIsAvaliableToCpfPayment(status);
 			repository.saveAndFlush(custumer.get());
 			return returnMessage(status);
+		} catch (Exception e) {
+			return "Error to " + returnMessage(status);
 		}
-		return "Error to " + returnMessage(status);
 	}
 
 	private String returnMessage(boolean status) {
