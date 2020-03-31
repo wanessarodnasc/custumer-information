@@ -15,3 +15,7 @@ Spring Boot
 Spring data using repository interfaces implement JpaRepository
 H2 Database 
 JUnit
+
+### Test Collecition 
+
+https://github.com/wanessarodnasc/custumer-information/blob/master/src/main/resources/postman/custumer-infomation.postman_collection.json
