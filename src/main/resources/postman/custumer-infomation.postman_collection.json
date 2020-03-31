@@ -1,0 +1,88 @@
+{
+	"info": {
+		"_postman_id": "7b2e708d-77a6-4655-bb98-c20d95ce6fc6",
+		"name": "custumer-infomation",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Custumer Information",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/search-custumer?cpf=35177355221",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"search-custumer"
+					],
+					"query": [
+						{
+							"key": "cpf",
+							"value": "35177355221"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Disable payment with CPF",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"35177355221\",\r\n    \"status\": \"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/update-custumer-information",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"update-custumer-information"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable payment with CPF",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"code\": \"35177355221\",\r\n    \"status\": \"true\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/update-custumer-information",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"update-custumer-information"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
