@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.nubank.custumerinformation.exception.BussinessException;
 import com.nubank.custumerinformation.form.CustumerStatusForm;
 import com.nubank.custumerinformation.model.Custumer;
 
@@ -20,13 +21,13 @@ public class CustumerInformationServiceTest {
 	private CustumerInformationService service;
 	
 	@Test
-	public void getCustumerInformation() {
+	public void getCustumerInformation() throws BussinessException {
 		Custumer custumer = service.getCustumerInformation("35177355221");
 		assertNotNull(custumer);
 	}
 	
 	@Test
-	public void updateCustumerCpfPayment() {
+	public void updateCustumerCpfPayment() throws BussinessException {
 		Custumer custumer = service.getCustumerInformation("35177355221");
 		if(custumer.getIsAvaliableToCpfPayment() == true) {
 			service.updateCustumerCpfPayment(getCustumerInformation("35177355221", false));

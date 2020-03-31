@@ -3,7 +3,8 @@ package com.nubank.custumerinformation.enumeration;
 public enum StatusEnum {
 	
 	ENABLED("Enabled"),
-	DISABLED("Disabled");
+	DISABLED("Disabled"),
+	DOES_NOT_EXIST("Custumer does not exists.");
 	
 	private String description;
 

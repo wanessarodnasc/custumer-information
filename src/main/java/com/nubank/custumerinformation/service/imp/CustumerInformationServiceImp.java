@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.nubank.custumerinformation.enumeration.StatusEnum;
+import com.nubank.custumerinformation.exception.BussinessException;
 import com.nubank.custumerinformation.form.CustumerStatusForm;
 import com.nubank.custumerinformation.model.Custumer;
 import com.nubank.custumerinformation.repository.CustumerInformationRepository;
@@ -22,13 +23,9 @@ public class CustumerInformationServiceImp implements CustumerInformationService
 	private CustumerInformationRepository repository ;
 
 	@Override
-	public Custumer getCustumerInformation(String cpf) {
+	public Custumer getCustumerInformation(String cpf) throws BussinessException {
 		LOGGER.info("Get custumer information by CPF.");
-		Optional<Custumer> custumer = repository.findByCpf(cpf);
-		if(custumer.isPresent()) {
-			return custumer.get();
-		}
-		return null;
+		return getCustumer(cpf);
 	}
 
 	@Override
@@ -36,16 +33,21 @@ public class CustumerInformationServiceImp implements CustumerInformationService
 		Boolean status = custumerForm.getStatus();
 		LOGGER.info("Set cpf payment to " + custumerForm.getStatus());
 		try {
-			Optional<Custumer> custumer = repository.findByCpf(custumerForm.getCode());
-			if(!custumer.isPresent()) {
-				return "Custumer does not exist.";
-			}
-			custumer.get().setIsAvaliableToCpfPayment(status);
-			repository.saveAndFlush(custumer.get());
+			Custumer custumer = getCustumer(custumerForm.getCode());
+			custumer.setIsAvaliableToCpfPayment(status);
+			repository.save(custumer);
 			return returnMessage(status);
 		} catch (Exception e) {
 			return "Error to " + returnMessage(status);
 		}
+	}
+
+	private Custumer getCustumer(String cpf) throws BussinessException {
+		Optional<Custumer> custumer = repository.findByCpf(cpf);
+		if(!custumer.isPresent()) {
+			throw new BussinessException(StatusEnum.DOES_NOT_EXIST.getDescription());
+		}
+		return custumer.get();
 	}
 
 	private String returnMessage(boolean status) {
